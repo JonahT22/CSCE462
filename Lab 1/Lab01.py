@@ -26,6 +26,7 @@ tl1_Button = 15
 
 
 # SETUP
+GPIO.cleanup()
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(tl1_Red, GPIO.OUT, initial = 0)
 GPIO.setup(tl1_Yellow_R, GPIO.OUT, initial = 0)
@@ -35,6 +36,9 @@ GPIO.setup(tl2_Red, GPIO.OUT, initial = 0)
 GPIO.setup(tl2_Yellow_R, GPIO.OUT, initial = 0)
 GPIO.setup(tl2_Yellow_G, GPIO.OUT, initial = 0)
 GPIO.setup(tl2_Green, GPIO.OUT, initial = 0)
+
+for i in range(0, 7):
+    GPIO.setup(panelPorts[i], GPIO.OUT, initial = 0)
 
 # Create pwm outputs with default frequency of 100
 tl1_R_pwm = GPIO.PWM(tl1_Yellow_R, 100)
