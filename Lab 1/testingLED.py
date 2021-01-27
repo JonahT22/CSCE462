@@ -4,7 +4,7 @@ GPIO.setmode(GPIO.BOARD)
 ledNum = 40
 GPIO.setup(ledNum, GPIO.OUT)
 # starting with frequency 100
-pwm = GPIO.PWM(led, 100)
+pwm = GPIO.PWM(ledNum, 100)
 # stating with 0, that is off state
 pwm.start(0)
 try:
