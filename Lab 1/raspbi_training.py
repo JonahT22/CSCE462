@@ -9,15 +9,16 @@ GPIO.setmode(GPIO.BOARD)
 
 #Setting up output pin*******************************************************
 #General format: GPIO.setup(pin_name, GPIO.OUT, initial_state (0 or 1))
-output1 = 8
-GPIO.setup(output1, GPIO.OUT, initial = 0)
+#output1 = 8
+#GPIO.setup(output1, GPIO.OUT, initial = 0)
 
 #General format: GPIO.output(pin, state)
 #GPIO.output(output1, 1)
 
 """
-simple blink function
-
+#simple blink function
+output1 = 8
+GPIO.setup(output1, GPIO.OUT, initial = 0)
 try:
     while(True):
         #turn on, set as HIGH for 1 sec
@@ -51,22 +52,23 @@ except KeyboardInterrupt:
 """
 simple state detection function
 """
+#"""
 input1 = 7
 output1 = 8
-GPIO.setup(output1, GPIO.OUT, initial = 0)
 GPIO.setup(input1, GPIO.IN, GPIO.PUD_UP)
+GPIO.setup(output1, GPIO.OUT, initial = 0)
+try:
+    while(True):
+        #Check input on pin 7
+        if GPIO.input(input1) == 0:
+            GPIO.output(output1, GPIO.HIGH)
+            print("LED now on...")
+        else:
+            GPIO.output(output1, GPIO.LOW)
+            print("LED now off...")
+        time.sleep(1)
+except KeyboardInterrupt:
+    GPIO.cleanup()
+    print("Exiting...")
 
-
-
-"""
-##
-#Setting up input pin*******************************************************
-input1 = 11
-GPIO.setup(output1, GPIO.IN, initial = 0)
-
-#Read from the pin using GPIO.input(pin_name)
-
-
-"""
-#Clean up GPIO pins; apparently, this is very required
-#GPIO.cleanup()
+#"""
