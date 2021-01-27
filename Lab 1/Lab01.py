@@ -17,7 +17,7 @@ tl2_Yellow_G = 10 # The green terminal of the yellow light
 tl2_Green = 9
 
 # an array holding the port numbers of each display segment
-# (in the order a, b, c, d, e, f, g)
+#     (order:  a, b, c,  d,  e,  f,  g)
 panelPorts = [11, 5, 6, 13, 19, 26, 14]
 
 
@@ -41,7 +41,19 @@ tl1_R_pwm = GPIO.PWM(tl1_Yellow_R, 100)
 tl2_R_pwm = GPIO.PWM(tl2_Yellow_R, 100)
 
 
+# MAIN
+try:
+    # Testing the 7-segment display
+    segDisplay.setDisplayNum(panelPorts, 3)
+    time.sleep(1)
+    segDisplay.setDisplayNum(panelPorts, 2)
+    time.sleep(1)
+    segDisplay.setDisplayNum(panelPorts, 1)
+    time.sleep(1)
 
+except KeyboardInterrupt:
+    GPIO.cleanup()
+    print("Exiting...")
 
 
 
