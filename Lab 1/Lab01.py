@@ -53,11 +53,12 @@ try:
     # Testing the 7-segment display
     for i in range(9, -1, -1):
         segDisplay.setDisplayNum(panelPorts, i)
-        time.sleep(1)
+        time.sleep(0.1)
     segDisplay.setDisplayNum(panelPorts, -1)  # clear the display
 
-    GPIO.output(tl1_Green)
+    GPIO.output(tl1_Yellow_G, GPIO.HIGH)
     tl1_R_pwm.ChangeDutyCycle(90)
+    time.sleep(1)
 
 except KeyboardInterrupt:
     GPIO.cleanup()
