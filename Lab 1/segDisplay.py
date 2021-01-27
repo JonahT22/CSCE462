@@ -12,7 +12,7 @@ def b2GPIO(bVal):
 def setDisplayNum(displayPorts, newNum):
     """Sets the GPIO output pins given in the displayPorts array
     so that the newNum is shown on the display"""
-    if(displayPorts.len() != 7):
+    if(len(displayPorts) != 7):
         print("ERROR: displayPorts must be a list of size 7")
         return False
     
