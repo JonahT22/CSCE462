@@ -26,7 +26,7 @@ tl1_Button = 15
 
 
 # SETUP
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 GPIO.setup(tl1_Red, GPIO.OUT, initial = 0)
 GPIO.setup(tl1_Yellow_R, GPIO.OUT, initial = 0)
 GPIO.setup(tl1_Yellow_G, GPIO.OUT, initial = 0)
