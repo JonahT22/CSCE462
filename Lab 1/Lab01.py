@@ -56,6 +56,7 @@ try:
         time.sleep(0.1)
     segDisplay.setDisplayNum(panelPorts, -1)  # clear the display
 
+    # test turning the LED yellow
     GPIO.output(tl1_Yellow_G, GPIO.HIGH)
     tl1_R_pwm.ChangeDutyCycle(90)
     time.sleep(1)
