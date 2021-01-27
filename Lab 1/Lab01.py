@@ -43,7 +43,9 @@ for i in range(0, 7):
 
 # Create pwm outputs with default frequency of 100
 tl1_R_pwm = GPIO.PWM(tl1_Yellow_R, 100)
+tl1_R_pwm.start(0)  # 0 is off state
 tl2_R_pwm = GPIO.PWM(tl2_Yellow_R, 100)
+tl2_R_pwm.start(0)
 
 
 # MAIN
@@ -51,8 +53,13 @@ try:
     # Testing the 7-segment display
     for i in range(9, -1, -1):
         segDisplay.setDisplayNum(panelPorts, i)
-        time.sleep(1)
+        time.sleep(0.1)
     segDisplay.setDisplayNum(panelPorts, -1)  # clear the display
+
+    # test turning the LED yellow
+    GPIO.output(tl1_Yellow_G, GPIO.HIGH)
+    tl1_R_pwm.ChangeDutyCycle(90)
+    time.sleep(1)
 
 except KeyboardInterrupt:
     GPIO.cleanup()
