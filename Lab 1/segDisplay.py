@@ -31,8 +31,16 @@ def setDisplayNum(displayPorts, newNum):
         segList = [0, 1, 1, 0, 0, 1, 1]
     elif(newNum == 5):
         segList = [1, 0, 1, 1, 0, 1, 1]
+    elif(newNum == 6):
+        segList = [1, 0, 1, 1, 1, 1, 1]
+    elif(newNum == 7):
+        segList = [1, 1, 1, 0, 0, 0, 0]
+    elif(newNum == 8):
+        segList = [1, 1, 1, 1, 1, 1, 1]
+    elif(newNum == 9):
+        segList = [1, 1, 1, 1, 0, 1, 1]
     else:
-        print("haven't programmed ", newNum, " yet")
+        print("ERROR: ", newNum, " is an invalid number! Only 0-9 are supported.")
 
     # Set all of the display port values based on the binary data in segList
     for i in range(0, 7):

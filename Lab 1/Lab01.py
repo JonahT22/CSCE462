@@ -26,7 +26,8 @@ tl1_Button = 15
 
 
 # SETUP
-GPIO.cleanup()
+GPIO.setwarnings(False)  # Stop GPIO from warning that we're using some
+                         # multi-purpose pins as GPIO pins
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(tl1_Red, GPIO.OUT, initial = 0)
 GPIO.setup(tl1_Yellow_R, GPIO.OUT, initial = 0)
@@ -48,12 +49,9 @@ tl2_R_pwm = GPIO.PWM(tl2_Yellow_R, 100)
 # MAIN
 try:
     # Testing the 7-segment display
-    segDisplay.setDisplayNum(panelPorts, 3)
-    time.sleep(1)
-    segDisplay.setDisplayNum(panelPorts, 2)
-    time.sleep(1)
-    segDisplay.setDisplayNum(panelPorts, 1)
-    time.sleep(1)
+    for i in range(9, -1, -1)
+        segDisplay.setDisplayNum(panelPorts, i)
+        time.sleep(1)
 
 except KeyboardInterrupt:
     GPIO.cleanup()
