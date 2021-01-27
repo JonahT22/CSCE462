@@ -20,3 +20,7 @@ try:
 except KeyboardInterrupt:
     pwm.stop()
     GPIO.cleanup()
+
+# Note for the future: to get an orange color, set frequency to 100, duty
+# cycle to 90, send that signal to red, give orange full power
+
