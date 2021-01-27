@@ -49,7 +49,7 @@ tl2_R_pwm = GPIO.PWM(tl2_Yellow_R, 100)
 # MAIN
 try:
     # Testing the 7-segment display
-    for i in range(9, -1, -1)
+    for i in range(9, -1, -1):
         segDisplay.setDisplayNum(panelPorts, i)
         time.sleep(1)
     segDisplay.setDisplayNum(-1)  # clear the display
