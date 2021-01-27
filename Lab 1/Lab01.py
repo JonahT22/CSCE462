@@ -52,7 +52,7 @@ try:
     for i in range(9, -1, -1):
         segDisplay.setDisplayNum(panelPorts, i)
         time.sleep(1)
-    segDisplay.setDisplayNum(-1)  # clear the display
+    segDisplay.setDisplayNum(panelPorts, -1)  # clear the display
 
 except KeyboardInterrupt:
     GPIO.cleanup()
