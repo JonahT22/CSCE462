@@ -43,7 +43,9 @@ for i in range(0, 7):
 
 # Create pwm outputs with default frequency of 100
 tl1_R_pwm = GPIO.PWM(tl1_Yellow_R, 100)
+tl1_R_pwm.start(0)  # 0 is off state
 tl2_R_pwm = GPIO.PWM(tl2_Yellow_R, 100)
+tl2_R_pwm.start(0)
 
 
 # MAIN
@@ -53,6 +55,9 @@ try:
         segDisplay.setDisplayNum(panelPorts, i)
         time.sleep(1)
     segDisplay.setDisplayNum(panelPorts, -1)  # clear the display
+
+    GPIO.output(tl1_Green)
+    tl1_R_pwm.ChangeDutyCycle(90)
 
 except KeyboardInterrupt:
     GPIO.cleanup()
