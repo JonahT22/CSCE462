@@ -11,7 +11,7 @@ def b2GPIO(bVal):
 
 def setDisplayNum(displayPorts, newNum):
     """Sets the GPIO output pins given in the displayPorts array
-    so that the newNum is shown on the display"""
+    so that the newNum is shown on the display. Set to -1 to clear display"""
     if(len(displayPorts) != 7):
         print("ERROR: displayPorts must be a list of size 7")
         return False
@@ -39,6 +39,9 @@ def setDisplayNum(displayPorts, newNum):
         segList = [1, 1, 1, 1, 1, 1, 1]
     elif(newNum == 9):
         segList = [1, 1, 1, 1, 0, 1, 1]
+    elif(newNum == -1):
+        print("Clearing display...")
+        segList = [0, 0, 0, 0, 0, 0, 0]
     else:
         print("ERROR: ", newNum, " is an invalid number! Only 0-9 are supported.")
 
