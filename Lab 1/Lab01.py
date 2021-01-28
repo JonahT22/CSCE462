@@ -2,40 +2,30 @@ import RPi.GPIO as GPIO
 import time
 import segDisplay
 
-# NOTES:
-# -To get an orangeish-yellow color, set frequency to 100, duty cycle to 90,
-#  send that signal to the red terminal, give green full power
-
 # OUTPUT PORTS
 tl1_Red = 2
-tl1_Yellow_R = 3  # The red terminal of the yellow light
-tl1_Yellow_G = 4  # The green terminal of the yellow light
+tl1_Blue = 3
 tl1_Green = 17
 tl2_Red = 27
-tl2_Yellow_R = 22 # The red terminal of the yellow light
-tl2_Yellow_G = 10 # The green terminal of the yellow light
+tl2_Blue = 22
 tl2_Green = 9
 
 # an array holding the port numbers of each display segment
 #     (order:  a, b, c,  d,  e,  f,  g)
 panelPorts = [11, 5, 6, 13, 19, 26, 14]
 
-
 # INPUT PORTS
 tl1_Button = 15
-
 
 # SETUP
 GPIO.setwarnings(False)  # Stop GPIO from warning that we're using some
                          # multi-purpose pins as GPIO pins
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(tl1_Red, GPIO.OUT, initial = 0)
-GPIO.setup(tl1_Yellow_R, GPIO.OUT, initial = 0)
-GPIO.setup(tl1_Yellow_G, GPIO.OUT, initial = 0)
+GPIO.setup(tl1_Blue, GPIO.OUT, initial = 0)
 GPIO.setup(tl1_Green, GPIO.OUT, initial = 0)
 GPIO.setup(tl2_Red, GPIO.OUT, initial = 0)
-GPIO.setup(tl2_Yellow_R, GPIO.OUT, initial = 0)
-GPIO.setup(tl2_Yellow_G, GPIO.OUT, initial = 0)
+GPIO.setup(tl2_Blue, GPIO.OUT, initial = 0)
 GPIO.setup(tl2_Green, GPIO.OUT, initial = 0)
 
 for i in range(0, 7):
@@ -43,28 +33,30 @@ for i in range(0, 7):
 
 GPIO.setup(tl1_Button, GPIO.IN, GPIO.PUD_DOWN)
 
-# Create pwm outputs with default frequency of 100
-tl1_R_pwm = GPIO.PWM(tl1_Yellow_R, 100)
-tl1_R_pwm.start(0)  # 0 is off state
-tl2_R_pwm = GPIO.PWM(tl2_Yellow_R, 100)
-tl2_R_pwm.start(0)
+
+def lightCycle():
+    print("run light cycle")
 
 
 # MAIN
 try:
-    # Testing the 7-segment display
-    for i in range(9, -1, -1):
-        segDisplay.setDisplayNum(panelPorts, i)
-        time.sleep(0.1)
-    segDisplay.setDisplayNum(panelPorts, -1)  # clear the display
+    # # Testing the 7-segment display
+    # for i in range(9, -1, -1):
+    #     segDisplay.setDisplayNum(panelPorts, i)
+    #     time.sleep(0.1)
+    # segDisplay.setDisplayNum(panelPorts, -1)  # clear the display
+    if(sys.argv[1] == "polling"):
+        usePolling = True;
+    elif(sys.arv[1] == "interrupt"):
+        usePolling = False;
+    else:
+        print("ERROR: must supply either \"polling\" or \"interrupt\" as input args!")
+        exit()
 
-    # test turning the LED yellow
-    # GPIO.output(tl1_Yellow_G, GPIO.HIGH)
-    # tl1_R_pwm.ChangeDutyCycle(90)
-    
     while(True):
-        print(GPIO.input(tl1_Button))
-
+        if(usePolling == True):
+            if(GPIO.input(tl1_Button) == GPIO.HIGH):
+                lightCycle()
 
     GPIO.cleanup()
 
