@@ -89,9 +89,6 @@ try:
                 canPress = True
         if usePolling == False:
             time.sleep(1)  # Do nothing, but don't hog the CPU
-    
-    # TODO: add extra delays to the lightcycle function so that it takes 20s
-    # TODO: add interrupt support via the "interrupt" input arg
 
 except KeyboardInterrupt:
     GPIO.cleanup()
