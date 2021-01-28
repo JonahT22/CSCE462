@@ -57,11 +57,13 @@ def lightCycle():
         if i <= 4:
             time.sleep(1)
         elif i > 0:
+            GPIO.output(tl1_Green, GPIO.LOW)
             blink(tl1_Blue)
         else: 
             GPIO.output(tl1_Red, GPIO.HIGH)
             time.sleep(1)
     segDisplay.setDisplayNum(panelPorts, -1)  # clear the display
+    GPIO.output(tl2_Red, GPIO.LOW)
     GPIO.output(tl2_Green, GPIO.HIGH)
 
 
