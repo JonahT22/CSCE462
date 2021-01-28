@@ -48,6 +48,8 @@ def lightCycle():
     for i in range(0, 3):
         blink(tl2_Blue)
     GPIO.output(tl2_Red, GPIO.HIGH)
+
+    GPIO.output(tl1_Red, GPIO.LOW)
     GPIO.output(tl1_Green, GPIO.HIGH)
     # begin the countdown
     for i in range(9, -1, -1):
@@ -62,13 +64,9 @@ def lightCycle():
     segDisplay.setDisplayNum(panelPorts, -1)  # clear the display
     GPIO.output(tl2_Green, GPIO.HIGH)
 
+
 # MAIN
 try:
-    # # Testing the 7-segment display
-    # for i in range(9, -1, -1):
-    #     segDisplay.setDisplayNum(panelPorts, i)
-    #     time.sleep(0.1)
-    # segDisplay.setDisplayNum(panelPorts, -1)  # clear the display
     usePolling = True  # use polling by default
     if len(sys.argv) == 2:
         if sys.argv[1] == "interrupt":
