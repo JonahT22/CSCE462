@@ -41,6 +41,8 @@ GPIO.setup(tl2_Green, GPIO.OUT, initial = 0)
 for i in range(0, 7):
     GPIO.setup(panelPorts[i], GPIO.OUT, initial = 0)
 
+GPIO.setup(tl1_Button, GPIO.IN, GPIO.PUD_DOWN)
+
 # Create pwm outputs with default frequency of 100
 tl1_R_pwm = GPIO.PWM(tl1_Yellow_R, 100)
 tl1_R_pwm.start(0)  # 0 is off state
@@ -57,24 +59,12 @@ try:
     segDisplay.setDisplayNum(panelPorts, -1)  # clear the display
 
     # test turning the LED yellow
-    GPIO.output(tl1_Yellow_G, GPIO.HIGH)
-    tl1_R_pwm.ChangeDutyCycle(90)
-    time.sleep(1)
-    GPIO.output(tl1_Yellow_G, GPIO.LOW)
+    # GPIO.output(tl1_Yellow_G, GPIO.HIGH)
+    # tl1_R_pwm.ChangeDutyCycle(90)
+    
+    while(True):
+        print(GPIO.input(tl1_Button))
 
-    #Test all other colors to ensure they're working as anticipated
-    GPIO.output(tl1_Red, GPIO.HIGH) 
-    GPIO.output(tl1_Green, GPIO.HIGH)
-    GPIO.output(tl2_Red, GPIO.HIGH)
-    GPIO.output(tl2_Green, GPIO.HIGH)
-    GPIO.output(tl2_Yellow_G, GPIO.HIGH)
-
-    time.sleep(2)
-    GPIO.output(tl1_Red, GPIO.LOW)
-    GPIO.output(tl1_Green, GPIO.LOW)
-    GPIO.output(tl2_Red, GPIO.LOW)
-    GPIO.output(tl2_Green, GPIO.LOW)
-    GPIO.output(tl2_Yellow_G, GPIO.HIGH)
 
     GPIO.cleanup()
 
