@@ -44,6 +44,7 @@ def setDisplayNum(displayPorts, newNum):
         segList = [0, 0, 0, 0, 0, 0, 0]
     else:
         print("ERROR: ", newNum, " is an invalid number! Only 0-9 are supported.")
+        return False
 
     # Set all of the display port values based on the binary data in segList
     for i in range(0, 7):
