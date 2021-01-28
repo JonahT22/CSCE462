@@ -54,7 +54,7 @@ def lightCycle():
     # begin the countdown
     for i in range(9, -1, -1):
         segDisplay.setDisplayNum(panelPorts, i)
-        if i <= 4:
+        if i > 4:
             time.sleep(1)
         elif i > 0:
             GPIO.output(tl1_Green, GPIO.LOW)
