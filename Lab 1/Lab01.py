@@ -43,7 +43,8 @@ def blink(lightPort):
 
 
 def lightCycle(channel):
-    print("channel = ", channel)
+    # Note: lightCycle must take in 1 input arg, but it is not used
+    # this input arg is automatically sent when it is called via an interrupt
     print("Detected button press...")
     GPIO.output(tl2_Green, GPIO.LOW)
     for i in range(0, 3):
