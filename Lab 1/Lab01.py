@@ -36,7 +36,9 @@ GPIO.setup(tl1_Button, GPIO.IN, GPIO.PUD_DOWN)
 
 
 def lightCycle():
-    print("run light cycle")
+    print("Detected button press...")
+    GPIO.output(tl2_Red, GPIO.LOW)
+    time.sleep(1)
 
 
 # MAIN
@@ -47,14 +49,20 @@ try:
     #     time.sleep(0.1)
     # segDisplay.setDisplayNum(panelPorts, -1)  # clear the display
     usePolling = True  # use polling by default
-    if(len(sys.argv) == 2):
-        if(sys.arv[1] == "interrupt"):
+    if len(sys.argv) == 2:
+        if sys.argv[1] == "interrupt":
             usePolling = False
 
-    while(True):
-        if(usePolling == True):
-            if(GPIO.input(tl1_Button) == GPIO.HIGH):
-                lightCycle()
+    GPIO.output(tl2_Green, GPIO.HIGH)
+    canPress = True
+    while True:
+        if usePolling == True:
+            if GPIO.input(tl1_Button) == GPIO.HIGH and canPress == True:
+                canPress = False
+                lightCycle()  # include the 20 second wait in this function
+                canPress = True
+        if usePolling == False:
+            time.sleep(1)  # Do nothing, but don't hog the CPU
 
     GPIO.cleanup()
 
