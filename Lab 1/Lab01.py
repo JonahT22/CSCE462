@@ -42,7 +42,9 @@ def blink(lightPort):
     time.sleep(0.5)
 
 
-def lightCycle():
+def lightCycle(channel):
+    # Note: lightCycle must take in 1 input arg, but it is not used
+    # this input arg is automatically sent when it is called via an interrupt
     print("Detected button press...")
     GPIO.output(tl2_Green, GPIO.LOW)
     for i in range(0, 3):
@@ -84,11 +86,10 @@ try:
         if usePolling == True:
             if GPIO.input(tl1_Button) == GPIO.HIGH and canPress == True:
                 canPress = False
-                lightCycle()  # include the 20 second wait in this function
+                lightCycle(0)  # include the 20 second wait in this function
                 canPress = True
         if usePolling == False:
             time.sleep(1)  # Do nothing, but don't hog the CPU i
-        time.sleep(0.01)
     # TODO: add extra delays to the lightcycle function so that it takes 20s
     # TODO: add interrupt support via the "interrupt" input arg
 
