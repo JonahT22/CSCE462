@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 import segDisplay
+import sys
 
 # OUTPUT PORTS
 tl1_Red = 2
@@ -45,13 +46,10 @@ try:
     #     segDisplay.setDisplayNum(panelPorts, i)
     #     time.sleep(0.1)
     # segDisplay.setDisplayNum(panelPorts, -1)  # clear the display
-    if(sys.argv[1] == "polling"):
-        usePolling = True;
-    elif(sys.arv[1] == "interrupt"):
-        usePolling = False;
-    else:
-        print("ERROR: must supply either \"polling\" or \"interrupt\" as input args!")
-        exit()
+    usePolling = True  # use polling by default
+    if(len(sys.argv) == 2):
+        if(sys.arv[1] == "interrupt"):
+            usePolling = False
 
     while(True):
         if(usePolling == True):
