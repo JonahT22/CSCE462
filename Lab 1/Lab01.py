@@ -65,6 +65,7 @@ def lightCycle():
     segDisplay.setDisplayNum(panelPorts, -1)  # clear the display
     GPIO.output(tl2_Red, GPIO.LOW)
     GPIO.output(tl2_Green, GPIO.HIGH)
+    time.sleep(7)  # wait a bit longer so that the whole function takes 20 seconds
 
 
 # MAIN
@@ -73,6 +74,8 @@ try:
     if len(sys.argv) == 2:
         if sys.argv[1] == "interrupt":
             usePolling = False
+            # Set the lightcycle function to run as a separate thread when button is pressed
+            GPIO.add_event_detect(tl1_Button, GPIO.RISING, lightCycle, 600)
 
     GPIO.output(tl2_Green, GPIO.HIGH)
     GPIO.output(tl1_Red, GPIO.HIGH)
