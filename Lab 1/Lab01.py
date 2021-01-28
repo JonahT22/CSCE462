@@ -60,10 +60,24 @@ try:
     GPIO.output(tl1_Yellow_G, GPIO.HIGH)
     tl1_R_pwm.ChangeDutyCycle(90)
     time.sleep(1)
+    GPIO.output(tl1_Yellow_G, GPIO.LOW)
+
+    #Test all other colors to ensure they're working as anticipated
+    GPIO.output(tl1_Red, GPIO.HIGH) 
+    GPIO.output(tl1_Green, GPIO.HIGH)
+    GPIO.output(tl2_Red, GPIO.HIGH)
+    GPIO.output(tl2_Green, GPIO.HIGH)
+    GPIO.output(tl2_Yellow_G, GPIO.HIGH)
+
+    time.sleep(2)
+    GPIO.output(tl1_Red, GPIO.LOW)
+    GPIO.output(tl1_Green, GPIO.LOW)
+    GPIO.output(tl2_Red, GPIO.LOW)
+    GPIO.output(tl2_Green, GPIO.LOW)
+    GPIO.output(tl2_Yellow_G, GPIO.HIGH)
+
+    GPIO.cleanup()
 
 except KeyboardInterrupt:
     GPIO.cleanup()
     print("Exiting...")
-
-
-

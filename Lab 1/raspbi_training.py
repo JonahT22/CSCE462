@@ -5,7 +5,7 @@ import time
 print(GPIO.RPI_INFO)
 
 #Set GPIO pin mode
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 
 #Setting up output pin*******************************************************
 #General format: GPIO.setup(pin_name, GPIO.OUT, initial_state (0 or 1))
@@ -52,7 +52,7 @@ except KeyboardInterrupt:
 """
 simple state detection function
 """
-#"""
+"""
 input1 = 7
 output1 = 8
 GPIO.setup(input1, GPIO.IN, GPIO.PUD_UP)
@@ -71,4 +71,4 @@ except KeyboardInterrupt:
     GPIO.cleanup()
     print("Exiting...")
 
-#"""
+"""
