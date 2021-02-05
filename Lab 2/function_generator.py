@@ -37,6 +37,9 @@ def square_wave(frequency, max_voltage):
 #Check for button press; if so, change button_state value.
 GPIO.add_event_detect(button, GPIO.BOTH, press_button, 600)
 
+# resolution of the triangle and sin waves
+tStep = 0.0005
+
 try:
     #1. Wait for button to be pressed"""
     while(True):
@@ -74,9 +77,17 @@ try:
             
             #3. Implement appropriate function
             button_state = False
+            t = 0.0  # only used in sin and tr functions
             if function_name == "sq":
                 #Call square wave func
                 print("sq func given")
+                halfperiod = 1 / (2 * frequency)  #split period in half for length for each on/off cycle
+                dac_voltage = (max_voltage / 5.0) * 4096  #calculate value to set DAC to
+                while not button_state:
+                    dac.set_voltage(dac_voltage)
+                    time.sleep(halfperiod)
+                    dac.set_voltage(0)
+                    time.sleep(halfperiod)
             elif function_name == "tr":
                 #Call tri wave func
                 while not button_state:
@@ -85,12 +96,10 @@ try:
             elif function_name == "sin":
                 #Call sin wave func
                 print("Sin func given")
-                t = 0.0
-                tStep = 0.0005
                 while not button_state:
-                    voltage = (0.2 * max_voltage) * 4096 * (.5 * (1.0 + math.sin(2*math.pi*frequency*t)))
+                    voltage = (0.2 * max_voltage) * (.5 * (1.0 + math.sin(2*math.pi*frequency*t))) * 4096
                     dac.set_voltage(int(voltage))
-                    t += tStep
+                    t += tStep  # tStep is defined above main
                     time.sleep(tStep)
             else:
                 print("Incorrect function name given, press button to try again")
