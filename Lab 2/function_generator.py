@@ -90,9 +90,12 @@ try:
                     time.sleep(halfperiod)
             elif function_name == "tr":
                 #Call tri wave func
+                print("tr func given")
+                maxval = 1000
+                period = 1 / frequency
                 while not button_state:
-                    print("tr func given")
-                    time.sleep(1)
+                    value = math.fmod(t, period) / period
+                    
             elif function_name == "sin":
                 #Call sin wave func
                 print("Sin func given")
