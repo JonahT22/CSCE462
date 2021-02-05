@@ -95,6 +95,8 @@ try:
                 period = 1 / frequency
                 while not button_state:
                     value = math.fmod(t, period) / period
+                    print(value)
+                    t += tStep
                     
             elif function_name == "sin":
                 #Call sin wave func
