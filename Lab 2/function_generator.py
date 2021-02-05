@@ -39,42 +39,42 @@ GPIO.add_event_detect(button, GPIO.BOTH, press_button, 600)
 
 try:
     #1. Wait for button to be pressed"""
-    GPIO.wait_for_edge(button, GPIO.RISING)
     while(True):
         #print(GPIO.input(button))
         #print(button_state)
-        print("Button triggered")    
-        #2. Ask user for: function name (sq, tr, sin), frequency, 
-        #max voltage (3 < x < 5V). Have three separate 
-        #prompts for each input field.
-        function_name = raw_input("Enter desired function (sq, tr, sin): ")
-        frequency_string = raw_input("Enter desired frequency (up to 20 Hz): ")
-        max_voltage_string = raw_input("Enter maximum output voltage (2.7 - 5.0 V): ")
-        #convert freq, max_voltage to doubles
-        frequency = float(frequency_string)
-        max_voltage = float(max_voltage_string)
+        if(button_state):
+            print("Button triggered")    
+            #2. Ask user for: function name (sq, tr, sin), frequency, 
+            #max voltage (3 < x < 5V). Have three separate 
+            #prompts for each input field.
+            function_name = raw_input("Enter desired function (sq, tr, sin): ")
+            frequency_string = raw_input("Enter desired frequency (up to 20 Hz): ")
+            max_voltage_string = raw_input("Enter maximum output voltage (2.7 - 5.0 V): ")
+            #convert freq, max_voltage to doubles
+            frequency = float(frequency_string)
+            max_voltage = float(max_voltage_string)
             
-        #3. Implement appropriate function
-        button_state = False
-        if function_name == "sq":
-            #Call square wave func
-            #print("sq func given")
-            while not button_state:
-                #square_wave(frequency, max_voltage)
-                print("sq wave func")
-                time.sleep(1)
-        elif function_name == "tr":
-            #Call tri wave func
-            while not button_state:
-                print("tr func given")
-                time.sleep(1)
-        elif function_name == "sin":
-            #Call sin wave func
-            while not button_state:
-                print("Sin func given")
-                time.sleep(1)
-        else:
-            print("Incorrect function name given, press button to try again")
+            #3. Implement appropriate function
+            button_state = False
+            if function_name == "sq":
+                #Call square wave func
+                #print("sq func given")
+                while not button_state:
+                    #square_wave(frequency, max_voltage)
+                    print("sq wave func")
+                    time.sleep(1)
+            elif function_name == "tr":
+                #Call tri wave func
+                while not button_state:
+                    print("tr func given")
+                    time.sleep(1)
+            elif function_name == "sin":
+                #Call sin wave func
+                while not button_state:
+                    print("Sin func given")
+                    time.sleep(1)
+            else:
+                print("Incorrect function name given, press button to try again")
 except KeyboardInterrupt:
     GPIO.cleanup()
     print("Cleaning up...")
