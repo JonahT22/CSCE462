@@ -86,7 +86,7 @@ try:
                 #Call sin wave func
                 print("Sin func given")
                 t = 0.0
-                tStep = 0.05
+                tStep = 0.0005
                 while not button_state:
                     voltage = (0.2 * max_voltage) * 4096 * (.5 * (1.0 + math.sin(2*math.pi*frequency*t)))
                     dac.set_voltage(int(voltage))
