@@ -23,21 +23,10 @@ def press_button(channel):
     button_state = True
     #print("button state = ", button_state)
 
-#Assuming frequencies and max voltage are not entered incorrectly
-def square_wave(frequency, max_voltage):
-    period = 1 / frequency      #total period of entire wave
-    period = period / 2         #split period in half for length for each on/off cycle
-    dac_voltage = max_voltage * 4096/5  #calculate value to set DAC to
-    dac.set_voltage(dac_voltage)
-    time.sleep(period)
-    dac.set_voltage(0)
-    time.sleep(period)
-
-
 #Check for button press; if so, change button_state value.
 GPIO.add_event_detect(button, GPIO.BOTH, press_button, 600)
 
-# resolution of the triangle and sin waves
+# resolution of the waveforms: smaller is more detailed but slower
 tStep = 0.0005
 
 try:
