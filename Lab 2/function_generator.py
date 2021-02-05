@@ -43,16 +43,34 @@ try:
         #print(GPIO.input(button))
         #print(button_state)
         if(button_state):
-            print("Button triggered")    
+            print("Button triggered")  
+            # Keep track of these variables for validating user input 
+            nameGood = False
+            freqGood = False
+            voltGood = False 
             #2. Ask user for: function name (sq, tr, sin), frequency, 
             #max voltage (3 < x < 5V). Have three separate 
             #prompts for each input field.
-            function_name = raw_input("Enter desired function (sq, tr, sin): ")
-            frequency_string = raw_input("Enter desired frequency (up to 20 Hz): ")
-            max_voltage_string = raw_input("Enter maximum output voltage (2.7 - 5.0 V): ")
-            #convert freq, max_voltage to doubles
-            frequency = float(frequency_string)
-            max_voltage = float(max_voltage_string)
+            while not nameGood:
+                function_name = raw_input("Enter desired function (sq, tr, sin): ")
+                if function_name == "sq" or function_name == "tr" or function_name == "sin":
+                    nameGood = True
+                else:
+                    print("    invalid function name! please try again")
+            while not freqGood:
+                frequency_string = raw_input("Enter desired frequency (up to 20 Hz): ")
+                frequency = float(frequency_string)
+                if frequency <= 20 and frequency > 0:
+                    freqGood = True
+                else:
+                    print("    invalid frequency! please try again")
+            while not voltGood:
+                max_voltage_string = raw_input("Enter maximum output voltage (2.7 - 5.0 V): ")
+                max_voltage = float(max_voltage_string)
+                if max_voltage <= 5.0 and max_voltage >= 2.7:
+                    voltGood = True
+                else:
+                    print("    invalid voltage! please try again")
             
             #3. Implement appropriate function
             button_state = False
