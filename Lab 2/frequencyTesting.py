@@ -3,17 +3,21 @@ import time
 GPIO.setmode(GPIO.BOARD)
 ledNum = 40
 GPIO.setup(ledNum, GPIO.OUT)
-# starting with frequency 100
-pwm = GPIO.PWM(ledNum, 1)
-# stating with 0, that is off state
-pwm.start(0)
+GPIO.setwarnings(False)
+tStep = 0.1  #starting frequency: 10 Hz
 try:
     while 1:
         newfreq = input("please enter a new frequency: ")
-        pwm.ChangeFrequency(newfreq)
-        time.sleep(.1)
+        tStep = 1 / float(newfreq)
+        t = 0
+        while(t < 5):
+            GPIO.output(ledNum, GPIO.HIGH)
+            time.sleep(tStep)
+            GPIO.output(ledNum, GPIO.LOW)
+            time.sleep(tStep)
+            t += tStep
+        
 except KeyboardInterrupt:
-    pwm.stop()
     GPIO.cleanup()
 
 # Note for the future: to get an orange color, set frequency to 100, duty
