@@ -94,8 +94,8 @@ try:
                 maxval = 1000
                 period = 1 / frequency
                 while not button_state:
-                    value = math.fmod(t, period) / period
-                    print(value)
+                    voltage = math.abs((math.fmod(t, period) / period) - 1) * (max_voltage / 5) * 4096
+                    dac.set_voltage(int(voltage))
                     t += tStep
                     
             elif function_name == "sin":
