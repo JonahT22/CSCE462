@@ -82,7 +82,7 @@ try:
                 #Call square wave func
                 print("sq func given")
                 halfperiod = 1 / (2 * frequency)  #split period in half for length for each on/off cycle
-                dac_voltage = (max_voltage / 5.0) * 4096  #calculate value to set DAC to
+                dac_voltage = int((max_voltage / 5.0) * 4096)  #calculate value to set DAC to
                 while not button_state:
                     dac.set_voltage(dac_voltage)
                     time.sleep(halfperiod)
