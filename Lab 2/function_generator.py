@@ -18,16 +18,17 @@ GPIO.setup(function_signal, GPIO.OUT, initial = 0)
 button_state = False;
 def press_button(channel):
     button_state = True
+    print("button state = ", button_state)
 
 button = 35
 GPIO.setup(button, GPIO.IN, GPIO.PUD_UP)
 
 #Check for button press; if so, change button_state value.
-GPIO.add_event_detect(button, GPIO.RISING, press_button, 600)
+GPIO.add_event_detect(button, GPIO.BOTH, press_button, 600)
 
 try:
     #1. Wait for button to be pressed"""
-    while(not button_state):
+    while(True):
         time.sleep(1)
         print(GPIO.input(button))
         print(button_state)
@@ -50,7 +51,6 @@ try:
                 print("Sin func given")
             else:
                 print("Try typing your function again")
-        button_state = False
 except KeyboardInterrupt:
     GPIO.cleanup()
     print("Cleaning up...")
