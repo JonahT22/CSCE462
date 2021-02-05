@@ -53,7 +53,7 @@ try:
             #prompts for each input field.
             while not nameGood:
                 function_name = raw_input("Enter desired function (sq, tr, sin): ")
-                if function_name == ("sq" or "tr" or "sin"):
+                if function_name not in ("sq", "tr", "sin"):
                     nameGood = True
                 else:
                     print("    invalid function name! please try again")
