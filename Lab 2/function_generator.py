@@ -56,21 +56,21 @@ try:
                 if function_name == ("sq" or "tr" or "sin"):
                     nameGood = True
                 else:
-                    print("invalid function name! please try again")
+                    print("    invalid function name! please try again")
             while not freqGood:
                 frequency_string = raw_input("Enter desired frequency (up to 20 Hz): ")
                 frequency = float(frequency_string)
                 if frequency <= 20 and frequency > 0:
                     freqGood = True
                 else:
-                    print("invalid frequency! please try again")
+                    print("    invalid frequency! please try again")
             while not voltGood:
                 max_voltage_string = raw_input("Enter maximum output voltage (2.7 - 5.0 V): ")
                 max_voltage = float(max_voltage_string)
                 if max_voltage <= 5.0 and max_voltage >= 2.7:
                     voltGood = True
                 else:
-                    print("invalid voltage! please try again")
+                    print("    invalid voltage! please try again")
             
             #3. Implement appropriate function
             button_state = False
