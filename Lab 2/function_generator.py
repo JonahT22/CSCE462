@@ -17,6 +17,7 @@ GPIO.setup(function_signal, GPIO.OUT, initial = 0)
 #Set up button_state + button_state change func
 button_state = False;
 def press_button(channel):
+    global button_state
     button_state = True
     print("button state = ", button_state)
 
