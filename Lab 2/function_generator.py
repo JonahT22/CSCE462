@@ -88,7 +88,7 @@ try:
                 t = 0.0
                 tStep = 0.05
                 while not button_state:
-                    voltage = 2048 * (1.0 + .5 * math.sin(2*math.pi*frequency*t))
+                    voltage = 4096 * (.5 * (1.0 + math.sin(2*math.pi*frequency*t)))
                     dac.set_voltage(int(voltage))
                     t += tStep
                     time.sleep(tStep)
