@@ -76,11 +76,14 @@ try:
             button_state = False
             if function_name == "sq":
                 #Call square wave func
-                #print("sq func given")
+                print("sq func given")
+                t = 0.0
+                tStep = 0.05
                 while not button_state:
-                    #square_wave(frequency, max_voltage)
-                    print("sq wave func")
-                    time.sleep(1)
+                    voltage = 2048 * (1.0 + .5 * math.sin(2*math.pi*frequency*t))
+                    dac.set_voltage(int(voltage))
+                    t += tStep
+                    time.sleep(tStep)
             elif function_name == "tr":
                 #Call tri wave func
                 while not button_state:
