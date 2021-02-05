@@ -89,6 +89,7 @@ try:
                         dac.set_voltage(dac_voltage)
                     else:
                         dac.set_voltage(0)
+                    t += tStep
             elif function_name == "tr":
                 #Call tri wave func
                 print("Triangle function given")
