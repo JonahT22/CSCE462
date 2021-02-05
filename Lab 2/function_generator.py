@@ -52,10 +52,10 @@ try:
             while not freqGood:
                 frequency_string = raw_input("Enter desired frequency (up to 20 Hz): ")
                 frequency = float(frequency_string)
-                if frequency <= 20 and frequency > 0:
-                    freqGood = True
-                else:
-                    print("    invalid frequency! please try again")
+                #if frequency <= 20 and frequency > 0:
+                freqGood = True
+                #else:
+                #    print("    invalid frequency! please try again")
             while not voltGood:
                 max_voltage_string = raw_input("Enter maximum output voltage (2.7 - 5.0 V): ")
                 max_voltage = float(max_voltage_string)
@@ -79,15 +79,16 @@ try:
                     else:
                         dac.set_voltage(0)
                     t += tStep
+                    time.sleep(tStep)
             elif function_name == "tr":
                 #Call tri wave func
                 print("Triangle function given")
-                period = 1 / frequency
+                period = 1 / (2 * frequency)
                 while not button_state:
                     voltage = math.fabs((2 * math.fmod(t, period) / period) - 1) * (max_voltage / 5) * 4096
                     dac.set_voltage(int(voltage))
                     t += tStep
-                    
+                    time.sleep(tStep)
             elif function_name == "sin":
                 #Call sin wave func
                 print("Sine function given")
@@ -95,6 +96,7 @@ try:
                     voltage = (0.2 * max_voltage) * (.5 * (1.0 + math.sin(2*math.pi*frequency*t))) * 4096
                     dac.set_voltage(int(voltage))
                     t += tStep  # tStep is defined above main
+                    time.sleep(tStep)
                     time.sleep(tStep)
             else:
                 print("Incorrect function name given, press button to try again")
