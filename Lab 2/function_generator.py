@@ -97,7 +97,6 @@ try:
                     dac.set_voltage(int(voltage))
                     t += tStep  # tStep is defined above main
                     time.sleep(tStep)
-                    time.sleep(tStep)
             else:
                 print("Incorrect function name given, press button to try again")
 except KeyboardInterrupt:
