@@ -80,8 +80,8 @@ try:
             t = 0.0  # only used in sin and tr functions
             if function_name == "sq":
                 #Call square wave func
-                print("sq func given")
-                halfperiod = 1 / (2 * frequency)  #split period in half for length for each on/off cycle
+                print("Square function given")
+                period = 1 / frequency
                 dac_voltage = int((max_voltage / 5.0) * 4096)  #calculate value to set DAC to
                 while not button_state:
                     dac.set_voltage(dac_voltage)
@@ -90,8 +90,7 @@ try:
                     time.sleep(halfperiod)
             elif function_name == "tr":
                 #Call tri wave func
-                print("tr func given")
-                maxval = 1000
+                print("Triangle function given")
                 period = 1 / frequency
                 while not button_state:
                     voltage = math.fabs((2 * math.fmod(t, period) / period) - 1) * (max_voltage / 5) * 4096
@@ -100,7 +99,7 @@ try:
                     
             elif function_name == "sin":
                 #Call sin wave func
-                print("Sin func given")
+                print("Sine function given")
                 while not button_state:
                     voltage = (0.2 * max_voltage) * (.5 * (1.0 + math.sin(2*math.pi*frequency*t))) * 4096
                     dac.set_voltage(int(voltage))
