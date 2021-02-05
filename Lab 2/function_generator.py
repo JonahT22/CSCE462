@@ -37,6 +37,9 @@ def square_wave(frequency, max_voltage):
 #Check for button press; if so, change button_state value.
 GPIO.add_event_detect(button, GPIO.BOTH, press_button, 600)
 
+# resolution of the triangle and sin waves
+tStep = 0.0005
+
 try:
     #1. Wait for button to be pressed"""
     while(True):
@@ -74,23 +77,36 @@ try:
             
             #3. Implement appropriate function
             button_state = False
+            t = 0.0  # time since the waveform began
             if function_name == "sq":
                 #Call square wave func
-                #print("sq func given")
+                print("Square function given")
+                period = 1 / frequency
+                dac_voltage = int((max_voltage / 5.0) * 4096)  #calculate value to set DAC to
                 while not button_state:
-                    #square_wave(frequency, max_voltage)
-                    print("sq wave func")
-                    time.sleep(1)
+                    rem = math.fmod(t, period) / period  # some value between 0 and 1
+                    if rem > 0.5:
+                        dac.set_voltage(dac_voltage)
+                    else:
+                        dac.set_voltage(0)
+                    t += tStep
             elif function_name == "tr":
                 #Call tri wave func
+                print("Triangle function given")
+                period = 1 / frequency
                 while not button_state:
-                    print("tr func given")
-                    time.sleep(1)
+                    voltage = math.fabs((2 * math.fmod(t, period) / period) - 1) * (max_voltage / 5) * 4096
+                    dac.set_voltage(int(voltage))
+                    t += tStep
+                    
             elif function_name == "sin":
                 #Call sin wave func
+                print("Sine function given")
                 while not button_state:
-                    print("Sin func given")
-                    time.sleep(1)
+                    voltage = (0.2 * max_voltage) * (.5 * (1.0 + math.sin(2*math.pi*frequency*t))) * 4096
+                    dac.set_voltage(int(voltage))
+                    t += tStep  # tStep is defined above main
+                    time.sleep(tStep)
             else:
                 print("Incorrect function name given, press button to try again")
 except KeyboardInterrupt:
