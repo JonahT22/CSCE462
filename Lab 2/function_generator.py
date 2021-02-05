@@ -77,17 +77,18 @@ try:
             
             #3. Implement appropriate function
             button_state = False
-            t = 0.0  # only used in sin and tr functions
+            t = 0.0  # time since the waveform began
             if function_name == "sq":
                 #Call square wave func
                 print("Square function given")
                 period = 1 / frequency
                 dac_voltage = int((max_voltage / 5.0) * 4096)  #calculate value to set DAC to
                 while not button_state:
-                    dac.set_voltage(dac_voltage)
-                    time.sleep(halfperiod)
-                    dac.set_voltage(0)
-                    time.sleep(halfperiod)
+                    rem = math.fmod(t, period) / period  # some value between 0 and 1
+                    if rem > 0.5:
+                        dac.set_voltage(dac_voltage)
+                    else:
+                        dac.set_voltage(0)
             elif function_name == "tr":
                 #Call tri wave func
                 print("Triangle function given")
