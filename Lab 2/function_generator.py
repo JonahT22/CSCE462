@@ -94,7 +94,7 @@ try:
                 maxval = 1000
                 period = 1 / frequency
                 while not button_state:
-                    voltage = math.abs((math.fmod(t, period) / period) - 1) * (max_voltage / 5) * 4096
+                    voltage = math.fabs((2 * math.fmod(t, period) / period) - 1) * (max_voltage / 5) * 4096
                     dac.set_voltage(int(voltage))
                     t += tStep
                     
