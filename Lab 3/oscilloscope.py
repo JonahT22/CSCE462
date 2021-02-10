@@ -9,8 +9,17 @@ import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
 
 #set up board + ADC chip
+#create spi bus
+spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
 
+#create the chip select (which port slave chip is connected to)
+cs = digitalio.DigitalInOut(board.D22)
 
+#create MCP object
+mcp = MCP.MCP3008(spi, cs)
+
+#create an analog input channel on pin 0 of ADC
+input_chan = AnalogIn(mcp, MCP.P0)
 
 #General structure of program:
 
