@@ -27,6 +27,8 @@ freq = 0.0
 freq_change = False
 
 #Frequency finding function
+#can change the zero requirement to just any arbitrary voltage value,
+#in case not all functions are centered at zero.
 def find_frequency():
     while abs(input_chan.voltage) > 0.05:
         pass                        #do nothing; wait until zero voltage is measured
@@ -38,6 +40,10 @@ def find_frequency():
     time_end = time.time()          #second zero reached
     freq = 1.0 / (time_end - time_begin)
     return freq
+
+#Max/min voltage finding function
+#def find_max_min(freq):
+    
 
 #1. Find frequency (how? - check for first instance of zero, sleep for a time)
 # The time.sleep() works for eliminating jitter since there is a narrow band of possible
