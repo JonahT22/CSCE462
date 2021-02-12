@@ -25,17 +25,18 @@ input_chan = AnalogIn(mcp, MCP.P0)
 #General structure of program:
 freq = 0.0
 freq_change = False
+desired_voltage = 1
 
 #Frequency finding function
 #can change the zero requirement to just any arbitrary voltage value,
 #in case not all functions are centered at zero.
 def find_frequency():
-    while abs(input_chan.voltage) > 0.05:
+    while input_chan.voltage < desired_voltage:
         pass                        #do nothing; wait until zero voltage is measured
     time_begin = time.time()        #first zero reached 
     time.sleep(0.04)                #eliminate jitter by sleeping
     #Loop until next zero voltage value found
-    while abs(input_chan.voltage) > 0.05:
+    while input_chan.voltage > desired_voltage:
         pass                        #do nothing
     time_end = time.time()          #second zero reached
     freq = 1.0 / (time_end - time_begin)
@@ -52,7 +53,8 @@ freq = find_frequency()
 print(freq)
 
 #2. Find max/min voltages (how?)
-
+min_volt = 0
+max_volt = 2
 
 #3. Using previous two, use expected function values at specific intervals to determine
 # type of function.
