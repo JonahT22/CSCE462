@@ -1,5 +1,4 @@
 #import relevant libraries
-#import RPi.GPIO as GPIO
 import time
 import os
 import busio
@@ -57,7 +56,7 @@ def find_period():
     return period
     
 try:
-    #startTime = time.perf_counter()  # used for oscillosope frequency measurement
+    #startTime = time.perf_counter()  # used for oscilloscope frequency measurement
     while(True):
         #1. Find frequency (how? - check for first instance of zero, sleep for a time)
         period = find_period()
@@ -91,7 +90,7 @@ try:
         else:
             print("bruh   ", end='')
         
-        #print("Sampling Frequency = ", num_samples / (time.perf_counter() - startTime))  # used for oscillosope frequency measurement
+        #print("Sampling Frequency = ", num_samples / (time.perf_counter() - startTime))  # used for oscilloscope frequency measurement
         print("Frequency = ", 1 / period)
 
 except KeyboardInterrupt:
