@@ -26,73 +26,47 @@ input_chan = AnalogIn(mcp, MCP.P0)
 desired_voltage = 1
 sample_average = 0.0
 error_threshold = 0.1
+#num_samples = 0  # used for oscilloscope frequency measurement
 
 def collectData():
+    #global num_samples  # used for oscilloscope frequency measurement
     sum = 0
     for i in range(0, 2):
         sum += input_chan.voltage
     output = sum / 2.0
+    #num_samples += 1  # used for oscilloscope frequency measurement
     return output
 
 #Period finding function
 #can change the zero requirement to just any arbitrary voltage value,
 #in case not all functions are centered at zero.
 def find_period():
-    """while input_chan.voltage > desired_voltage:
-        pass
-    while input_chan.voltage < desired_voltage:
-        pass                        #do nothing; wait until zero voltage is measured
-    """
     while collectData() > desired_voltage:
         pass
     while collectData() < desired_voltage:
         pass
-    #print("voltage = ", input_chan.voltage)
     time_begin = time.time()        #first zero reached 
-    #print(time_begin)
-    #time.sleep(0.02)                #eliminate jitter by sleeping
+
     #Loop until next zero voltage value found
-    """
-    while input_chan.voltage > desired_voltage:
-        pass                        #do nothing
-    #time.sleep(0.02)
-    while input_chan.voltage < desired_voltage:
-        pass
-    """
     while collectData() > desired_voltage:
         pass
     while collectData() < desired_voltage:
         pass
-    #time.sleep(0.02)
-    #print("voltage = ", input_chan.voltage)
     time_end = time.time()          #second zero reached
-    #print(time_end)
-    #print("Diff = ", time_end - time_begin)
     period = time_end - time_begin
-    #freq = 1.0 / ( (time_end - time_begin))
     return period
-
-#Max/min voltage finding function
-#def find_max_min(freq):
     
 try:
+    #startTime = time.perf_counter()  # used for oscillosope frequency measurement
     while(True):
         #1. Find frequency (how? - check for first instance of zero, sleep for a time)
-        # The time.sleep() works for eliminating jitter since there is a narrow band of possible
-        # frequencies (1 - 20 Hz).
         period = find_period()
+        #sample a data point 1/8 of the way through the cycle
         sleeptime = abs(.125 * period - 0.00225)
         time.sleep(sleeptime)
-        #sample 10 data pointa
-        sample_average = input_chan.voltage
-        """
-        for i in range(0,2):
-            sample_average += input_chan.voltage
-        sample_average /= 2.0"""
-        #print("Frequency: ", 1.0 / period)
-        #print("Average sampled data: ", sample_average)
-
-        #2. Find max/min voltages (how?)
+        sample_average = collectData() # input_chan.voltage
+        
+        #2. Set the max and min voltage values
         min_volt = 0
         max_volt = 2
 
@@ -117,9 +91,9 @@ try:
         else:
             print("bruh   ", end='')
         
+        #print("Sampling Frequency = ", num_samples / (time.perf_counter() - startTime))  # used for oscillosope frequency measurement
         print("Frequency = ", 1 / period)
 
 except KeyboardInterrupt:
     print("Exiting...")
 
-#4. Continuously check for frequency, make sure it's on the same function (tolerance = within 0.5 Hz of defined value)
