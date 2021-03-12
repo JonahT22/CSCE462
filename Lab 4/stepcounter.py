@@ -68,7 +68,7 @@ class ValueSmoother:
 
 # Define constants
 THRESHOLD = 1.9
-MOV_AVG_SIZE = 10 # number of elements to include in the moving average
+MOV_AVG_SIZE = 5 # number of elements to include in the moving average
 bus = smbus.SMBus(1) 	# or bus = smbus.SMBus(0) for older version boards
 Device_Address = 0x68   # MPU6050 device address
 
@@ -117,6 +117,7 @@ try:
 				stepTimes.append(timeVals[-1])
 				stepVals.append(smoothVals[-2])
 				print("Steps detected: ", stepsFound)
+	sleep(0.1)
 
 except KeyboardInterrupt:
 	print("Exiting...")	
