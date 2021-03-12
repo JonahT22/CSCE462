@@ -107,11 +107,12 @@ try:
 		
 		timeVals.append(perf_counter() - startTime)
 
-		n = len(smoothVals)
-		peakFound = (smoothVals[n - 2] > smoothVals[n - 1]) and (smoothVals[n - 2] > smoothVals[n - 3])
-		if peakFound and smoothVals[n - 1] > THRESHOLD:
-			stepsFound += 1
-			print("Detected a step")
+		if len(smoothVals) > 3:
+			# Compare the 2nd most recent with the 1st and 3rd most recent
+			peakFound = (smoothVals[-2] > smoothVals[-1]) and (smoothVals[-2] > smoothVals[-3])
+			if peakFound and smoothVals[n - 1] > THRESHOLD:
+				stepsFound += 1
+				print("Detected a step")
 
 except KeyboardInterrupt:
 	print("Exiting...")	
@@ -120,7 +121,7 @@ endTime = perf_counter()
 
 plt.plot(timeVals, magVals, label = "Raw Data")
 plt.plot(timeVals, smoothVals, label = "Smoothed Data")
-plt.hlines(THRESHOLD, startTime, endTime - startTime, label="Threshold")
+plt.hlines(THRESHOLD, timeVals[0], timeVals[-1], label="Threshold")
 plt.title('Acceleration Magnitude')
 plt.show()
 
