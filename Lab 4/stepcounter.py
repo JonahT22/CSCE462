@@ -91,6 +91,7 @@ print ("starting...")
 try:
 	while True:
 		
+		# BEGIN STARTER CODE
 		#Read Accelerometer raw value
 		acc_x = read_raw_data(ACCEL_XOUT_H)
 		acc_y = read_raw_data(ACCEL_YOUT_H)
@@ -100,6 +101,7 @@ try:
 		Ax = acc_x/16384.0
 		Ay = acc_y/16384.0
 		Az = acc_z/16384.0
+		# END STARTER CODE
 
 		mag = math.sqrt(Ax**2 + Ay**2 + Az**2)
 		magVals.append(mag)
@@ -125,7 +127,7 @@ except KeyboardInterrupt:
 
 endTime = perf_counter()
 
-plt.scatter(timeVals, magVals, color='b', label = "Raw Data")
+plt.scatter(timeVals, magVals, color='o', marker='.', label = "Raw Data")
 plt.plot(timeVals, smoothVals, label = "Smoothed Data")
 plt.scatter(stepTimes, stepVals, marker='x', label = "Steps")
 plt.hlines(THRESHOLD, timeVals[0], timeVals[-1], label="Threshold")
