@@ -132,3 +132,5 @@ plt.hlines(THRESHOLD, timeVals[0], timeVals[-1], label="Threshold")
 plt.title('Acceleration Magnitude')
 plt.show()
 
+print("Frequency of sensor polling: ", len(timeVals) / (timeVals[-1] - timeVals[0]))
+
