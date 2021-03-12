@@ -119,8 +119,6 @@ try:
 				stepTimes.append(timeVals[-1])
 				stepVals.append(smoothVals[-2])
 				print("Steps detected: ", stepsFound)
-				if stepsFound >= 50:
-					break
 
 except KeyboardInterrupt:
 	print("Exiting...")	
