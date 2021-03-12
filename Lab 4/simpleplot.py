@@ -124,10 +124,12 @@ try:
 
 except KeyboardInterrupt:
 	print("Exiting...")	
+	
+endTime = perf_counter()
 
 plt.plot(timeVals, magVals, label = "Raw Data")
 plt.plot(timeVals, smoothVals, label = "Smoothed Data")
-plt.hlines(THRESHOLD, label="Threshold")
+plt.hlines(THRESHOLD, 0, endTime - startTime, label="Threshold")
 plt.title('Acceleration Magnitude')
 plt.show()
 
