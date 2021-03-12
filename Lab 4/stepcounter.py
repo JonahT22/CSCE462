@@ -122,15 +122,15 @@ try:
 				if stepsFound >= 50:
 					break
 
-	endTime = perf_counter()
-
-	plt.scatter(timeVals, magVals, color='o', marker='.', label = "Raw Data")
-	plt.plot(timeVals, smoothVals, label = "Smoothed Data")
-	plt.scatter(stepTimes, stepVals, marker='x', label = "Steps")
-	plt.hlines(THRESHOLD, timeVals[0], timeVals[-1], label="Threshold")
-	plt.title('Acceleration Magnitude')
-	plt.show()
-
 except KeyboardInterrupt:
 	print("Exiting...")	
+
+endTime = perf_counter()
+
+plt.scatter(timeVals, magVals, color='r', marker='.', label = "Raw Data")
+plt.plot(timeVals, smoothVals, label = "Smoothed Data")
+plt.scatter(stepTimes, stepVals, marker='x', label = "Steps")
+plt.hlines(THRESHOLD, timeVals[0], timeVals[-1], label="Threshold")
+plt.title('Acceleration Magnitude')
+plt.show()
 
