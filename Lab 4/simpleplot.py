@@ -51,20 +51,20 @@ def read_raw_data(addr):
         return value
 
 class ValueSmoother:
-	def __init__(self, threshold_size):
+	def __init__(self, size):
 		self.values = []
-		self.thresh_size = threshold_size
+		self.smoother_size = size
 		self.avg = 0
 		self.currentIndex = 0
-		for i in range (0, self.thresh_size):
+		for i in range (0, self.smoother_size):
 			# initialize to all zeros
 			self.values.append(0) 
 	
 
 	def AddValue(self, newvalue):
 		self.values[self.currentIndex] = newvalue
-		self.currentIndex = (self.currentIndex + 1) % self.thresh_size
-		self.avg = sum(self.values) / float(self.thresh_size)
+		self.currentIndex = (self.currentIndex + 1) % self.smoother_size
+		self.avg = sum(self.values) / float(self.smoother_size)
 
 bus = smbus.SMBus(1) 	# or bus = smbus.SMBus(0) for older version boards
 Device_Address = 0x68   # MPU6050 device address
@@ -73,7 +73,7 @@ MPU_Init()
 
 # Define constants
 THRESHOLD = 100  # not actually used yet
-MOV_AVG_SIZE = 5 # number of elements to include in the moving average
+MOV_AVG_SIZE = 10 # number of elements to include in the moving average
 
 # Define variables
 magVals = []
@@ -118,7 +118,7 @@ try:
 		# Gz = gyro_z/131.0
 		
 
-		print ("\tAx=%.2f g" %Ax, "\tAy=%.2f g" %Ay, "\tAz=%.2f g" %Az)
+		#print ("\tAx=%.2f g" %Ax, "\tAy=%.2f g" %Ay, "\tAz=%.2f g" %Az)
 		#if (perf_counter() - startTime) > 5:
 		#	break
 
