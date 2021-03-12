@@ -117,14 +117,15 @@ try:
 				stepTimes.append(timeVals[-1])
 				stepVals.append(smoothVals[-2])
 				print("Steps detected: ", stepsFound)
-	# sleep(0.1)
+				if stepsFound >= 50:
+					break
 
 except KeyboardInterrupt:
 	print("Exiting...")	
 
 endTime = perf_counter()
 
-plt.plot(timeVals, magVals, marker='.', label = "Raw Data")
+plt.scatter(timeVals, magVals, color='b', label = "Raw Data")
 plt.plot(timeVals, smoothVals, label = "Smoothed Data")
 plt.scatter(stepTimes, stepVals, marker='x', label = "Steps")
 plt.hlines(THRESHOLD, timeVals[0], timeVals[-1], label="Threshold")
