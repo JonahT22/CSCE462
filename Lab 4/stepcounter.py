@@ -80,6 +80,7 @@ magVals = []
 smoothVals = []
 timeVals = []
 stepVals = []
+stepTimes = []
 startTime = perf_counter()
 smoother = ValueSmoother(MOV_AVG_SIZE)
 stepsFound = 0
@@ -113,6 +114,7 @@ try:
 			peakFound = (smoothVals[-2] > smoothVals[-1]) and (smoothVals[-2] > smoothVals[-3])
 			if peakFound and smoothVals[-2] > THRESHOLD:
 				stepsFound += 1
+				stepTimes.append(timeVals[-1])
 				stepVals.append(smoothVals[-2])
 				print("Steps detected: ", stepsFound)
 
@@ -123,7 +125,7 @@ endTime = perf_counter()
 
 plt.plot(timeVals, magVals, label = "Raw Data")
 plt.plot(timeVals, smoothVals, label = "Smoothed Data")
-plt.plot(timeVals, stepVals, marker='x', label = "Steps", )
+plt.scatter(stepTimes, stepVals, marker='x', label = "Steps")
 plt.hlines(THRESHOLD, timeVals[0], timeVals[-1], label="Threshold")
 plt.title('Acceleration Magnitude')
 plt.show()
