@@ -61,7 +61,7 @@ class ValueSmoother:
 	
 
 	def AddValue(self, newvalue):
-		values[self.currentIndex] = newvalue
+		self.values[self.currentIndex] = newvalue
 		self.currentIndex = (self.currentIndex + 1) % self.values.len()
 		self.avg = self.values.average
 
