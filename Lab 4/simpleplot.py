@@ -99,7 +99,7 @@ try:
 except KeyboardInterrupt:
 	print("Exiting...")	
 
-plt.plot(magVals, timeVals)
+plt.plot(timeVals, magVals)
 plt.title('Acceleration Magnitude')
 plt.show()
 
