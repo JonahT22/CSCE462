@@ -63,7 +63,7 @@ class ValueSmoother:
 
 	def AddValue(self, newvalue):
 		self.values[self.currentIndex] = newvalue
-		self.currentIndex = (self.currentIndex + 1) % thresh_size
+		self.currentIndex = (self.currentIndex + 1) % self.thresh_size
 		self.avg = sum(self.values) / float(self.thresh_size)
 
 bus = smbus.SMBus(1) 	# or bus = smbus.SMBus(0) for older version boards
