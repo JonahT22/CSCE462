@@ -62,6 +62,8 @@ timeVals = []
 startTime = perf_counter()
 
 print (" Reading Data of Gyroscope and Accelerometer")
+sleep(5)
+print ("starting...")
 try:
 	while True:
 		
@@ -91,7 +93,8 @@ try:
 		
 
 		print ("\tAx=%.2f g" %Ax, "\tAy=%.2f g" %Ay, "\tAz=%.2f g" %Az)
-		sleep(1)
+		if (perf_counter() - startTime) > 5:
+			break
 
 except KeyboardInterrupt:
 	print("Exiting...")
