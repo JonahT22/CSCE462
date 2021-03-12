@@ -127,6 +127,7 @@ except KeyboardInterrupt:
 
 plt.plot(timeVals, magVals, label = "Raw Data")
 plt.plot(timeVals, smoothVals, label = "Smoothed Data")
+plt.hlines(THRESHOLD, label="Threshold")
 plt.title('Acceleration Magnitude')
 plt.show()
 
