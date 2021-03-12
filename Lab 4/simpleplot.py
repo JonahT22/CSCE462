@@ -67,7 +67,7 @@ class ValueSmoother:
 		self.avg = sum(self.values) / float(self.smoother_size)
 
 # Define constants
-THRESHOLD = 10 
+THRESHOLD = 1.9
 MOV_AVG_SIZE = 10 # number of elements to include in the moving average
 bus = smbus.SMBus(1) 	# or bus = smbus.SMBus(0) for older version boards
 Device_Address = 0x68   # MPU6050 device address
