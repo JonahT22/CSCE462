@@ -50,16 +50,37 @@ def read_raw_data(addr):
                 value = value - 65536
         return value
 
+class ValueSmoother:
+	def __init__(self, threshold_size):
+		self.values = []
+		self.avg = 0
+		self.currentIndex = 0
+		for i in range (0, threshold_size):
+			# initialize to all zeros
+			values.append(0) 
+	
+
+	def AddValue(self, newvalue):
+		values[self.currentIndex] = newvalue
+		self.currentIndex = (self.currentIndex + 1) % self.values.len()
+		self.avg = self.values.average
 
 bus = smbus.SMBus(1) 	# or bus = smbus.SMBus(0) for older version boards
 Device_Address = 0x68   # MPU6050 device address
 
 MPU_Init()
 
+# Define constants
+THRESHOLD = 100  # not actually used yet
+MOV_AVG_SIZE = 5 # number of elements to include in the moving average
+
 # Define variables
 magVals = []
+smoothVals = []
 timeVals = []
 startTime = perf_counter()
+smoother = ValueSmoother(THRESHOLD)
+
 
 print (" Reading Data of Gyroscope and Accelerometer")
 sleep(5)
@@ -79,6 +100,10 @@ try:
 
 		mag = math.sqrt(Ax**2 + Ay**2 + Az**2)
 		magVals.append(mag)
+
+		smoother.AddValue(mag)
+		smoothVals.append(smoother.avg)
+		
 		timeVals.append(perf_counter() - startTime)
 
 		
@@ -99,7 +124,8 @@ try:
 except KeyboardInterrupt:
 	print("Exiting...")	
 
-plt.plot(timeVals, magVals)
+plt.plot(timeVals, magVals, label = "Raw Data")
+plt.plot(timeVals, smoothVals, label = "Smoothed Data")
 plt.title('Acceleration Magnitude')
 plt.show()
 
