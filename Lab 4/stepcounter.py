@@ -67,7 +67,7 @@ class ValueSmoother:
 		self.avg = sum(self.values) / float(self.smoother_size)
 
 # Define constants
-THRESHOLD = 1.9
+THRESHOLD = 1.7
 MOV_AVG_SIZE = 10 # number of elements to include in the moving average
 bus = smbus.SMBus(1) 	# or bus = smbus.SMBus(0) for older version boards
 Device_Address = 0x68   # MPU6050 device address
@@ -124,7 +124,7 @@ except KeyboardInterrupt:
 
 endTime = perf_counter()
 
-plt.plot(timeVals, magVals, label = "Raw Data")
+plt.plot(timeVals, magVals, marker='.', label = "Raw Data")
 plt.plot(timeVals, smoothVals, label = "Smoothed Data")
 plt.scatter(stepTimes, stepVals, marker='x', label = "Steps")
 plt.hlines(THRESHOLD, timeVals[0], timeVals[-1], label="Threshold")
