@@ -7,6 +7,7 @@ from time import sleep, perf_counter
 import matplotlib.pyplot as plt
 import math
 
+# BEGIN STARTER CODE
 #some MPU6050 Registers and their Address
 PWR_MGMT_1   = 0x6B
 SMPLRT_DIV   = 0x19
@@ -49,6 +50,7 @@ def read_raw_data(addr):
         if(value > 32768):
                 value = value - 65536
         return value
+# END STARTER CODE
 
 class ValueSmoother:
 	def __init__(self, size):
