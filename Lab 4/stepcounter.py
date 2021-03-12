@@ -123,8 +123,8 @@ endTime = perf_counter()
 
 plt.plot(timeVals, magVals, label = "Raw Data")
 plt.plot(timeVals, smoothVals, label = "Smoothed Data")
-plt.plot(timeVals, stepVals, label = "Steps", )
-plt.hlines(THRESHOLD, timeVals[0], timeVals[-1], marker='x', label="Threshold")
+plt.plot(timeVals, stepVals, marker='x', label = "Steps", )
+plt.hlines(THRESHOLD, timeVals[0], timeVals[-1], label="Threshold")
 plt.title('Acceleration Magnitude')
 plt.show()
 
