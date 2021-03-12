@@ -67,7 +67,7 @@ class ValueSmoother:
 		self.avg = sum(self.values) / float(self.smoother_size)
 
 # Define constants
-THRESHOLD = 100  # not actually used yet
+THRESHOLD = 10 
 MOV_AVG_SIZE = 10 # number of elements to include in the moving average
 bus = smbus.SMBus(1) 	# or bus = smbus.SMBus(0) for older version boards
 Device_Address = 0x68   # MPU6050 device address
@@ -110,7 +110,7 @@ try:
 		if len(smoothVals) > 3:
 			# Compare the 2nd most recent with the 1st and 3rd most recent
 			peakFound = (smoothVals[-2] > smoothVals[-1]) and (smoothVals[-2] > smoothVals[-3])
-			if peakFound and smoothVals[n - 1] > THRESHOLD:
+			if peakFound and smoothVals[-1] > THRESHOLD:
 				stepsFound += 1
 				print("Detected a step")
 
