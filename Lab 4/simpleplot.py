@@ -80,7 +80,7 @@ magVals = []
 smoothVals = []
 timeVals = []
 startTime = perf_counter()
-smoother = ValueSmoother(THRESHOLD)
+smoother = ValueSmoother(MOV_AVG_SIZE)
 
 
 print (" Reading Data of Gyroscope and Accelerometer")
