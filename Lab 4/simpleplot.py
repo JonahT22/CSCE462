@@ -56,7 +56,7 @@ class ValueSmoother:
 		self.thresh_size = threshold_size
 		self.avg = 0
 		self.currentIndex = 0
-		for i in range (0, thresh_size):
+		for i in range (0, self.thresh_size):
 			# initialize to all zeros
 			self.values.append(0) 
 	
