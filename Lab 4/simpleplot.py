@@ -93,12 +93,13 @@ try:
 		
 
 		print ("\tAx=%.2f g" %Ax, "\tAy=%.2f g" %Ay, "\tAz=%.2f g" %Az)
-		if (perf_counter() - startTime) > 5:
-			break
+		#if (perf_counter() - startTime) > 5:
+		#	break
 
 except KeyboardInterrupt:
-	print("Exiting...")
-	plt.plot(magVals, timeVals)
-	plt.title('Acceleration Magnitude')
-	plt.show()
+	print("Exiting...")	
+
+plt.plot(magVals, timeVals)
+plt.title('Acceleration Magnitude')
+plt.show()
 
