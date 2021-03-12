@@ -60,20 +60,20 @@ class ValueSmoother:
 			# initialize to all zeros
 			self.values.append(0) 
 	
-
+	# Replace a value in the array, then recompute the average
 	def AddValue(self, newvalue):
 		self.values[self.currentIndex] = newvalue
 		self.currentIndex = (self.currentIndex + 1) % self.smoother_size
 		self.avg = sum(self.values) / float(self.smoother_size)
 
-bus = smbus.SMBus(1) 	# or bus = smbus.SMBus(0) for older version boards
-Device_Address = 0x68   # MPU6050 device address
-
-MPU_Init()
-
 # Define constants
 THRESHOLD = 100  # not actually used yet
 MOV_AVG_SIZE = 10 # number of elements to include in the moving average
+bus = smbus.SMBus(1) 	# or bus = smbus.SMBus(0) for older version boards
+Device_Address = 0x68   # MPU6050 device address
+
+# Set up the accelerometer
+MPU_Init()
 
 # Define variables
 magVals = []
@@ -81,7 +81,7 @@ smoothVals = []
 timeVals = []
 startTime = perf_counter()
 smoother = ValueSmoother(MOV_AVG_SIZE)
-
+stepsFound = 0
 
 print (" Reading Data of Gyroscope and Accelerometer")
 sleep(5)
@@ -107,29 +107,22 @@ try:
 		
 		timeVals.append(perf_counter() - startTime)
 
-		
-		# #Read Gyroscope raw value
-		# gyro_x = read_raw_data(GYRO_XOUT_H)
-		# gyro_y = read_raw_data(GYRO_YOUT_H)
-		# gyro_z = read_raw_data(GYRO_ZOUT_H)
-		
-		# Gx = gyro_x/131.0
-		# Gy = gyro_y/131.0
-		# Gz = gyro_z/131.0
-		
+		n = len(smoothVals)
+		peakFound = (smoothVals[n - 2] > smoothVals[n - 1]) and (smoothVals[n - 2] > smoothVals[n - 3])
+		if peakFound:
+			stepsFound += 1
+			print("Detected a step")
 
-		#print ("\tAx=%.2f g" %Ax, "\tAy=%.2f g" %Ay, "\tAz=%.2f g" %Az)
-		#if (perf_counter() - startTime) > 5:
-		#	break
+
 
 except KeyboardInterrupt:
 	print("Exiting...")	
-	
+
 endTime = perf_counter()
 
 plt.plot(timeVals, magVals, label = "Raw Data")
 plt.plot(timeVals, smoothVals, label = "Smoothed Data")
-plt.hlines(THRESHOLD, 0, endTime - startTime, label="Threshold")
+plt.hlines(THRESHOLD, startTime, endTime - startTime, label="Threshold")
 plt.title('Acceleration Magnitude')
 plt.show()
 
