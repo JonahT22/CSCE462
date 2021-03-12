@@ -53,17 +53,18 @@ def read_raw_data(addr):
 class ValueSmoother:
 	def __init__(self, threshold_size):
 		self.values = []
+		self.thresh_size = threshold_size
 		self.avg = 0
 		self.currentIndex = 0
-		for i in range (0, threshold_size):
+		for i in range (0, thresh_size):
 			# initialize to all zeros
 			self.values.append(0) 
 	
 
 	def AddValue(self, newvalue):
 		self.values[self.currentIndex] = newvalue
-		self.currentIndex = (self.currentIndex + 1) % self.values.len()
-		self.avg = self.values.average
+		self.currentIndex = (self.currentIndex + 1) % thresh_size
+		self.avg = sum(self.values) / float(self.thresh_size)
 
 bus = smbus.SMBus(1) 	# or bus = smbus.SMBus(0) for older version boards
 Device_Address = 0x68   # MPU6050 device address
