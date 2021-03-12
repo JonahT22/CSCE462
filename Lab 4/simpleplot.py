@@ -109,11 +109,9 @@ try:
 
 		n = len(smoothVals)
 		peakFound = (smoothVals[n - 2] > smoothVals[n - 1]) and (smoothVals[n - 2] > smoothVals[n - 3])
-		if peakFound:
+		if peakFound and smoothVals[n - 1] > THRESHOLD:
 			stepsFound += 1
 			print("Detected a step")
-
-
 
 except KeyboardInterrupt:
 	print("Exiting...")	
