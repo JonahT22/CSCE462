@@ -9,8 +9,8 @@ GPIO.setmode(GPIO.BCM)
 DHT_PIN = 18
 
 startTime = perf_counter()
-timevals = np.array()
-humidityvals = np.array()
+timevals = []
+humidityvals = []
 
 try:
 	while True:
