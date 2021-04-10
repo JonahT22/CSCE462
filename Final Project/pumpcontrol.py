@@ -13,9 +13,9 @@ print(GPIO.RPI_INFO)
 #Set GPIO pin mode
 GPIO.setmode(GPIO.BOARD)
 
-input1 = 40
+btn = 40
 output1 = 36
-GPIO.setup(input1, GPIO.IN, GPIO.PUD_DOWN)
+GPIO.setup(btn, GPIO.IN, GPIO.PUD_DOWN)
 GPIO.setup(output1, GPIO.OUT, initial = 0)
 
 try:
