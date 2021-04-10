@@ -11,31 +11,46 @@
 #		COM: GND of power source (i.e. wall plug)
 #		(Connect v+ of device straight to the power source. See https://www.electronicshub.org/control-a-relay-using-raspberry-pi/)
 #	Push Button:
-#		A-D side: 3.3V
+#		A-D side: resistor to 3.3V
 #		B-C side: GPIO21, and pull-down resistor to GND
 
 import RPi.GPIO as GPIO
+import time
 
 #Set GPIO pin mode
 GPIO.setmode(GPIO.BOARD)
 outPin = 38
+pushBtn = 40
 GPIO.setup(outPin, GPIO.OUT, initial = 0)
+GPIO.setup(pushBtn, GPIO.IN, GPIO.PUD_DOWN)
 
+def setup():
+    """Add event callback to manually control the pump operation with a button (for testing)"""
+    GPIO.add_event_detect(pushBtn, GPIO.BOTH, callback=manualOverride)
 
 def setOutputPin(pinNum):
-	outPin = pinNum
+    outPin = pinNum
 
 
 def turnOn():
-	GPIO.output(outPin, GPIO.HIGH)
+    GPIO.output(outPin, GPIO.HIGH)
 
 
 def turnOff():
-	GPIO.output(outPin, GPIO.LOW)
+    GPIO.output(outPin, GPIO.LOW)
 
 
-# Add event callbacks to manually control the pump operation with a button (for testing)
-pushBtn = 40
-GPIO.setup(pushBtn, GPIO.IN, GPIO.PUD_DOWN)
-GPIO.add_event_detect(btnPin, GPIO.RISING, callback=turnOn, bouncetime=600)
-GPIO.add_event_detect(btnPin, GPIO.FALLING, callback=turnOff, bouncetime=600)
+def manualOverride(channel):
+    if(GPIO.input(pushBtn) == 1):
+        GPIO.output(outPin, GPIO.HIGH)
+    else:
+        GPIO.output(outPin, GPIO.LOW)
+
+
+# infinite loop, just in case this file is run on its own
+try:
+    setup()
+    while(True):
+        time.sleep(0.1)
+except KeyboardInterrupt:
+    GPIO.cleanup()
