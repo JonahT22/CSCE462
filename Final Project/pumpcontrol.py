@@ -17,18 +17,22 @@
 import RPi.GPIO as GPIO
 import time
 
-#Set GPIO pin mode
-GPIO.setmode(GPIO.BOARD)
-outPin = 38
-pushBtn = 40
-GPIO.setup(outPin, GPIO.OUT, initial = 0)
-GPIO.setup(pushBtn, GPIO.IN, GPIO.PUD_DOWN)
+outPin = 0
+pushBtn = 0
 
 def setup():
-    """Add event callback to manually control the pump operation with a button (for testing)"""
+    global outPin
+    global pushBtn
+    GPIO.setmode(GPIO.BOARD)
+    outPin = 38
+    pushBtn = 40
+    GPIO.setup(outPin, GPIO.OUT, initial = 0)
+    GPIO.setup(pushBtn, GPIO.IN, GPIO.PUD_DOWN)
+    # Add event callback to manually control the pump operation with a button (for testing)
     GPIO.add_event_detect(pushBtn, GPIO.BOTH, callback=manualOverride)
 
 def setOutputPin(pinNum):
+    global outPin
     outPin = pinNum
 
 
@@ -48,6 +52,7 @@ def manualOverride(channel):
 
 
 # infinite loop, just in case this file is run on its own
+setup()
 try:
     setup()
     while(True):
