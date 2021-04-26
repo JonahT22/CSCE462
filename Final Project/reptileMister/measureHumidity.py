@@ -48,21 +48,60 @@ def avgHumidity(humidityvals, humidityvalsMaxSize):
 pcntrl.setup()
 mistingTime = 2
 
+# Turn on relay at specific times of day (within 1 minute tolerance)
+# Immediately after, gather humidity data.
 try:
+    # Keep track of whether humidity and misting has happened within the minute
+    humidityMeasured = False
+    misted = False
+    TESTING = False          #Only make this true if you are testing the program
+    
     while(True):
+        # Gather time
+        # Time is in military format
         t = time.localtime()
         currentTime = time.strftime("%H:%M", t)
-        print("Current time: {0}".format(currentTime))
-        mistTime1, mistTime2, testTime = "08:00", "16:00", "14:50"
-        if currentTime == mistTime1 or currentTime == mistTime2 or currentTime == testTime:
-            # Run the relay to mist the tank
-            pcntrl.runMister(mistingTime)
-        #Measure humidity data and keep
-        humidityvalsMaxSize = 5
-        humidityvals = measureHumidity(humidityvalsMaxSize)
-        
-        #Find average humidity of points
-        humidityAverage = avgHumidity(humidityvals, humidityvalsMaxSize)
+        # print("Current time: {0}".format(currentTime))
+        mistTime1, mistTime2 = "08:00", "16:00"
+        # Measure humidity if it has not been done already
+        if humidityMeasured == False:
+            if currentTime[3:] == "00" or TESTING == True:
+                # Display current time
+                print("Current time: {0}".format(currentTime))
+
+                # Measure humidity data and display graph
+                humidityvalsMaxSize = 5
+                humidityvals = measureHumidity(humidityvalsMaxSize)
+
+                #Find average humidity of points
+                humidityAverage = avgHumidity(humidityvals, humidityvalsMaxSize)
+                
+                # Make sure humidity isn't measured again until designated time:
+                humidityMeasured = True
+        else:
+            # Reset humidityMeasured after a minute has passed
+            # Allows humidity checks to occur at specific times only
+            
+            # Check if the time ends in "01"
+            if currentTime[3:] == "01" or TESTING == True:
+                humidityMeasured = False
+                print("humidityMeasured value reset")
+
+        if misted == False:
+            if currentTime == mistTime1 or currentTime == mistTime2 or TESTING == True:
+                # Run the relay to mist the tank1
+                pcntrl.runMister(mistingTime)
+                misted = True
+        else:
+            # Reset misted after a minute has passed
+            # Allows misting to occur at specific times only
+            if currentTime[3:] == "01" or TESTING == True:
+                misted = False
+                print("misted value reset")
+
+        # Don't continuously waste power on a loop
+        time.sleep(2)
+
 except KeyboardInterrupt:
     GPIO.cleanup()
 
