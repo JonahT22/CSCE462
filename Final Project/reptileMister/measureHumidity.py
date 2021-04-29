@@ -5,11 +5,14 @@ import matplotlib.pyplot as plt
 import time
 from time import perf_counter
 import pumpcontrol as pcntrl
+import sendEmail as email
 
 # DHT_SENSOR = Adafruit_DHT.AM2302
+print("Setting up humidity sensor")
 DHT_SENSOR = Adafruit_DHT.DHT22
 GPIO.setmode(GPIO.BCM)
 DHT_PIN = 24
+emailContent = "Time = Humidity value<br>"
 
 def measureHumidity(humidityvalsMaxSize):
     startTime = perf_counter()
@@ -37,24 +40,38 @@ def measureHumidity(humidityvalsMaxSize):
     return humidityvals
 
 # Return average humidity value
-def avgHumidity(humidityvals, humidityvalsMaxSize):
+def avgHumidity(humidityvals, humidityvalsMaxSize, currentTime):
     avgHumidity = 0.0
     for h in humidityvals:
         avgHumidity += h
     avgHumidity /= humidityvalsMaxSize
+    global emailContent 
+    emailContent = emailContent + currentTime + "= " + str(avgHumidity) + "<br>"
     return avgHumidity
+
+def sendEmail(sendTo, emailSubject, message):
+    # Send email
+    sender = email.Emailer()
+    sender.sendmail(sendTo, emailSubject, message)
+    print("Email with humidity data sent!")
+
+    # Reset string of data for next day
+    global emailContent 
+    emailContent = "Time = Humidity value\n"
+
 
 #Set up relay and pi connections
 pcntrl.setup()
 mistingTime = 2
+TESTING = True      # ONLY TRUE IF PROGRAM IS BEING TESTED!!
 
 # Turn on relay at specific times of day (within 1 minute tolerance)
 # Immediately after, gather humidity data.
+print("Starting program")
 try:
     # Keep track of whether humidity and misting has happened within the minute
     humidityMeasured = False
     misted = False
-    TESTING = False          #Only make this true if you are testing the program
     
     while(True):
         # Gather time
@@ -74,7 +91,7 @@ try:
                 humidityvals = measureHumidity(humidityvalsMaxSize)
 
                 #Find average humidity of points
-                humidityAverage = avgHumidity(humidityvals, humidityvalsMaxSize)
+                humidityAverage = avgHumidity(humidityvals, humidityvalsMaxSize, currentTime)
                 
                 # Make sure humidity isn't measured again until designated time:
                 humidityMeasured = True
@@ -99,7 +116,14 @@ try:
                 misted = False
                 print("misted value reset")
 
-        # Don't continuously waste power on a loop
+        # Finally, send data in an email once per day
+        if currentTime == "00:00" or TESTING == True:
+            # send email
+            sendTo = 'ostrich.bagelwocreamcheese@gmail.com'
+            emailSubject = "Hello World"
+            sendEmail(sendTo, emailSubject, emailContent)
+
+        # Don't continuously waste power on a polling loop
         time.sleep(2)
 
 except KeyboardInterrupt:
