@@ -57,7 +57,7 @@ def sendEmail(sendTo, emailSubject, message):
 
     # Reset string of data for next day
     global emailContent 
-    emailContent = "Time = Humidity value\n"
+    emailContent = "Time = Humidity value<br>"
 
 
 #Set up relay and pi connections
@@ -118,10 +118,14 @@ try:
 
         # Finally, send data in an email once per day
         if currentTime == "00:00" or TESTING == True:
-            # send email
-            sendTo = 'ostrich.bagelwocreamcheese@gmail.com'
-            emailSubject = "Hello World"
-            sendEmail(sendTo, emailSubject, emailContent)
+            if emailContent == "Time = Humidity value<br>":
+                # There's nothing to send in the email
+                print("No data to send in the email")
+            else:
+                # send email
+                sendTo = 'ostrich.bagelwocreamcheese@gmail.com'
+                emailSubject = "Hello World"
+                sendEmail(sendTo, emailSubject, emailContent)
 
         # Don't continuously waste power on a polling loop
         time.sleep(2)
