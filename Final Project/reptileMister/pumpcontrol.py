@@ -35,12 +35,13 @@ def setup():
     GPIO.setup(pushBtn, GPIO.IN, GPIO.PUD_DOWN)
     GPIO.setup(levelSwitch, GPIO.IN, GPIO.PUD_DOWN)
     # Add event callback to manually control the pump operation with a button (for testing)
-    GPIO.add_event_detect(pushBtn, GPIO.RISING, callback=manualOverride)
+    GPIO.add_event_detect(pushBtn, GPIO.RISING, callback=lambda x: manualOverride(pushBtn))
     GPIO.add_event_detect(levelSwitch, GPIO.BOTH, callback=lambda x: levelSwitchChange(levelSwitch))
 
-def manualOverride(channel):
+def manualOverride(pushBtn):
     global manualOverrideButton
-    if not manualOverrideButton:
+    time.sleep(0.25)
+    if(GPIO.input(pushBtn) == 1):
         manualOverrideButton = True
         print("Manual Override activated - press button again to deactivate")
     else:
