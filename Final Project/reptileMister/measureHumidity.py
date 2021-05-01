@@ -63,7 +63,7 @@ def sendEmail(sendTo, emailSubject, message):
 #Set up relay and pi connections
 pcntrl.setup()
 mistingTime = 2
-TESTING = True      # ONLY TRUE IF PROGRAM IS BEING TESTED!!
+TESTING = False      # ONLY TRUE IF PROGRAM IS BEING TESTED!!
 
 # Turn on relay at specific times of day (within 1 minute tolerance)
 # Immediately after, gather humidity data.
